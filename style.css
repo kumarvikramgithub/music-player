@@ -1,0 +1,98 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+.flex{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.container{
+    background-color: purple;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+}
+.thumbnail{
+    width: 360px;
+    background-color: rgb(100, 75, 75);
+    padding: 30px;
+    border-radius: 8px;
+    border: 1px solid grey;
+    box-shadow: 1px 1px 5px 2px grey;
+}
+.thumbnail img{
+    width: 300px;
+    height: 220px;
+    z-index: 5;
+    border-radius: 5px;
+}
+
+.musicDetails{
+    justify-content: space-between;
+    margin: 5px 0px;
+    color: white;
+    letter-spacing: 2px;
+}
+.musicDetails h3{
+    color: wheat;
+}
+
+.track{
+    margin: 30px 0 10px;
+    justify-content: start;
+    background-color: black;
+    height: 5px;
+    box-sizing: content-box;
+    border-radius: 5px;
+    box-shadow: 1px 1px 10px 2px rgb(108, 101, 108);
+     cursor: pointer;
+}
+.progressBar{
+    width: 0%;
+    background-color: red;
+    height: 5px;
+    cursor: pointer;
+}
+.circle{
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    border-radius: 100%;
+    margin-left: -5px;
+    cursor: pointer;
+}
+.timeSpan{
+    justify-content: space-between;
+    margin: 5px 0px;
+}
+.controls{
+    justify-content: space-between;
+    margin-top: 10px;
+}
+.controls i{
+    font-size: 1.3rem;
+    color: grey;
+    text-shadow: 1px 1px 2px 3px white;
+    cursor: pointer;
+    
+}
+
+.controls i:hover{
+    color: white
+}
+#playPause{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    background-color: purple;
+    border-radius: 50%;
+    border: 2px solid grey ;
+}
+.hover{
+    color: white;
+    border-color: white;
+}

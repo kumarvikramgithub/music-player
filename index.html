@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="./images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div class="container flex">
+        <div class="thumbnail">
+            <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&q=80&w=2070&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="">
+
+            <div class="musicDetails flex">
+                <h3>My Music</h3>
+                <p>Artist</p>
+            </div>
+            <div class="controlContainer">
+                <div class="track flex">
+                    <div class="progressBar"></div>
+                    <div class="circle"></div>
+                </div>
+                <div class="timeSpan flex">
+                    <div id="currentTime">0:00</div>
+                    <div id="totalDuration">0:00</div>
+                </div>
+                <div class="controls flex">
+                    <audio src="./audio/audio4.wav" id="myAudio"></audio>
+                    <i class="fa-solid fa-repeat hover" id="repeatPlayList"></i>
+                    <i class="fa-solid fa-backward hover" id="backward"></i>
+                    <i class="fa-solid fa-play hover" id="playPause"></i>
+                    <i class="fa-solid fa-forward hover" id="forward"></i>
+                    <i class="fa-regular fa-heart hover" id="addLike"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

@@ -11,11 +11,17 @@
 <body>
     <div class="container flex">
         <div class="thumbnail">
-            <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&q=80&w=2070&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="">
+            <img src="images/image1.jpg" alt="" id="songThumbnail">
 
-            <div class="musicDetails flex">
-                <h3>My Music</h3>
-                <p>Artist</p>
+            <div class="musicContainer">
+                <div class="playList flex">
+                    <h3>Bollywood Hits 2023 Songs</h3>
+                    <i class="fa-solid fa-repeat hover" id="repeatPlayList" title="Repeat playList"></i>
+                </div>
+                <div class="musicDetails flex">
+                    <h3 id="songName">My Music</h3>
+                    <p id="artistName">Artist</p>
+                </div>
             </div>
             <div class="controlContainer">
                 <div class="track flex">
@@ -27,12 +33,14 @@
                     <div id="totalDuration">0:00</div>
                 </div>
                 <div class="controls flex">
-                    <audio src="./audio/audio4.wav" id="myAudio"></audio>
-                    <i class="fa-solid fa-repeat hover" id="repeatPlayList"></i>
-                    <i class="fa-solid fa-backward hover" id="backward"></i>
-                    <i class="fa-solid fa-play hover" id="playPause"></i>
-                    <i class="fa-solid fa-forward hover" id="forward"></i>
-                    <i class="fa-regular fa-heart hover" id="addLike"></i>
+                    <audio src="./audio/audio1.mp3" id="myAudio"></audio>
+                    
+                    <i class="fa-solid fa-rotate-right hover" id="repeatSong" title="Repeat song"></i>
+                    <i class="fa-solid fa-backward hover" id="backward" title="Previous Song"></i>
+                    <i class="fa-solid fa-play hover" id="playPause" title="Play/Pause"></i>
+                    <i class="fa-solid fa-forward hover" id="forward" title="Next song"></i>
+                    <i class="fa-regular fa-heart hover" id="addLike" title="Fabroite song"></i>
+                    <!-- <i class="fa-solid fa-rotate-right"></i> -->
                 </div>
             </div>
         </div>

@@ -98,6 +98,11 @@ myAudio.addEventListener("timeupdate", (audio) => {
 });
 
 repeatSongBtn.addEventListener("click", () => {
+  repeatSong();
+  isRepeatAudio = !isRepeatAudio;
+});
+
+function repeatSong(){
   if (isRepeatAudio) {
     myAudio.loop = false;
     repeatSongBtn.style.color = "grey";
@@ -105,8 +110,7 @@ repeatSongBtn.addEventListener("click", () => {
     myAudio.loop = true;
     repeatSongBtn.style.color = "white";
   }
-  isRepeatAudio = !isRepeatAudio;
-});
+}
 
 trackBar.addEventListener("click", (track) => {
   let totalPageWidth = window.innerWidth;
@@ -163,18 +167,22 @@ backwardBtn.addEventListener("click", () => {
   disabledBackwardForward(backwardBtn, currentSong, true);
   if (currentSong > 0) {
     currentSong--;
+    console.log('Hi')
     songChange();
   }
 });
 
 forwardBtn.addEventListener("click", () => {
   disabledBackwardForward(forwardBtn, currentSong, false);
-  if (currentSong < playList.length - 1) {
+  if (currentSong < playList.songs.length - 1) {
     currentSong++;
     songChange();
   }
 });
 function songChange(){
+  if(isRepeatAudio){
+    repeatSong();
+  }
   myAudio.setAttribute("src", playList.songs[currentSong].audio);
   songThumbnail.setAttribute("src", playList.songs[currentSong].thumbnail);
   setSongDetails(playList.songs[currentSong].song, playList.songs[currentSong].artist);
@@ -191,7 +199,7 @@ function disabledBackwardForward(btn, songNo, isBackward) {
   // }else{
   //   btn.style.pointerEvents = "auto";
   // }
-  if (songNo === 0 || songNo === playList.length - 1) {
+  if (songNo === 0 || songNo === playList.songs.length - 1) {
     repeatPlayList(songNo, isBackward);
   }
 }
@@ -206,9 +214,9 @@ repeatPlayListBtn.addEventListener("click", () => {
 });
 function repeatPlayList(songNo, isBackward=false) {
   if (isPlayListRepeat && isBackward && songNo == 0) {
-    currentSong = playList.length;
+    currentSong = playList.songs.length;
   }
-  if (isPlayListRepeat && !isBackward && songNo == playList.length - 1) {
+  if (isPlayListRepeat && !isBackward && songNo == playList.songs.length - 1) {
     currentSong = -1;
   }
 }
@@ -216,6 +224,14 @@ function repeatPlayList(songNo, isBackward=false) {
 setSongDetails(playList.songs[0].song, playList.songs[0].artist);
 playListName.innerHTML = playList.name;
 function setSongDetails(song, artist) {
+  SongName.setAttribute('title',song);
+  AsrtistName.setAttribute("title", artist);
+  if(song.length>12){
+    song = song.substring(0,12)+'...';
+  }
+  if (artist.length > 12) {
+    artist = artist.substring(0, 8) + "...";
+  }
   SongName.innerHTML = `<i class="fa-solid fa-music"></i> ${song}`;
   AsrtistName.innerHTML = `<i class="fa-solid fa-circle-user"></i> ${artist}`;
 };

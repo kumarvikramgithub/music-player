@@ -132,7 +132,7 @@ function calulateTimes(totalAudioTime, currentAudioTime) {
   let playTime = currentAudioTime;
   if (totalAudioTime === currentAudioTime) {
     currentSong++;
-    currentSong = currentSong%playList.length;
+    currentSong = currentSong%playList.songs.length;
     songChange();
   }
 
@@ -175,8 +175,8 @@ forwardBtn.addEventListener("click", () => {
   }
 });
 function songChange(){
-  myAudio.setAttribute("src", playList[currentSong].audio);
-  songThumbnail.setAttribute("src", playList[currentSong].thumbnail);
+  myAudio.setAttribute("src", playList.songs[currentSong].audio);
+  songThumbnail.setAttribute("src", playList.songs[currentSong].thumbnail);
   setSongDetails(playList.songs[currentSong].song, playList.songs[currentSong].artist);
   let totalAudioTime = myAudio.duration;
   let currentAudioTime = myAudio.currentTime;

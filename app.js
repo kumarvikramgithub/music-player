@@ -16,11 +16,14 @@ const songThumbnail = document.querySelector("#songThumbnail");
 const repeatPlayListBtn = document.querySelector("#repeatPlayList");
 const SongName = document.querySelector("#songName");
 const AsrtistName = document.querySelector("#artistName");
+const playListName = document.querySelector("#playListName");
 
 let isPlaying = false;
 let isLiked = false;
 let isRepeatAudio = false;
-const playList = [
+const playList = {
+  name: `<i class="fa-solid fa-compact-disc disk"></i>Bollywood Hits 2023 `,
+songs: [
   {
     audio: "./audio/audio1.mp3",
     thumbnail: "./images/image1.jpg",
@@ -45,9 +48,12 @@ const playList = [
     song: "Pare Pare tere Aakh",
     artist: "Pushpa Raj",
   },
-];
+]
+}
 let currentSong = 0;
 let isPlayListRepeat = false;
+
+let favroiteAudio = [];
 
 playPauseBtn.addEventListener("click", () => {
   playPauseAudio();
@@ -73,6 +79,9 @@ likeBtn.addEventListener("click", () => {
   if (!isLiked) {
     likeBtn.classList.replace("fa-regular", "fa-solid");
     likeBtn.style.color = "red";
+    favroiteAudio.push(myAudio);
+    localStorage.setItem("favroite", favroiteAudio);
+    // let fs = localStorage.getItem("favroite");
   } else {
     likeBtn.classList.replace("fa-solid", "fa-regular");
     likeBtn.style.color = "grey";
@@ -122,7 +131,9 @@ function calulateTimes(totalAudioTime, currentAudioTime) {
   // Auto pause, when completed
   let playTime = currentAudioTime;
   if (totalAudioTime === currentAudioTime) {
-    playPauseAudio();
+    currentSong++;
+    currentSong = currentSong%playList.length;
+    songChange();
   }
 
   //Start track | Start Audio progressBar
@@ -152,14 +163,7 @@ backwardBtn.addEventListener("click", () => {
   disabledBackwardForward(backwardBtn, currentSong, true);
   if (currentSong > 0) {
     currentSong--;
-    myAudio.setAttribute("src", playList[currentSong].audio);
-    songThumbnail.setAttribute("src", playList[currentSong].thumbnail);
-    setSongDetails(playList[currentSong].song, playList[currentSong].artist);
-    let totalAudioTime = myAudio.duration;
-    let currentAudioTime = myAudio.currentTime;
-    calulateTimes(totalAudioTime, currentAudioTime);
-    isPlaying = false;
-    playPauseAudio();
+    songChange();
   }
 });
 
@@ -167,17 +171,19 @@ forwardBtn.addEventListener("click", () => {
   disabledBackwardForward(forwardBtn, currentSong, false);
   if (currentSong < playList.length - 1) {
     currentSong++;
-    myAudio.setAttribute("src", playList[currentSong].audio);
-    songThumbnail.setAttribute("src", playList[currentSong].thumbnail);
-    setSongDetails(playList[currentSong].song, playList[currentSong].artist);
-    let totalAudioTime = myAudio.duration;
-    let currentAudioTime = myAudio.currentTime;
-    calulateTimes(totalAudioTime, currentAudioTime);
-    isPlaying = false;
-    playPauseAudio();
+    songChange();
   }
 });
-
+function songChange(){
+  myAudio.setAttribute("src", playList[currentSong].audio);
+  songThumbnail.setAttribute("src", playList[currentSong].thumbnail);
+  setSongDetails(playList.songs[currentSong].song, playList.songs[currentSong].artist);
+  let totalAudioTime = myAudio.duration;
+  let currentAudioTime = myAudio.currentTime;
+  calulateTimes(totalAudioTime, currentAudioTime);
+  isPlaying = false;
+  playPauseAudio();
+}
 function disabledBackwardForward(btn, songNo, isBackward) {
   // if (song === songNo) {
   //   console.log(songNo, btn);
@@ -193,12 +199,12 @@ function disabledBackwardForward(btn, songNo, isBackward) {
 repeatPlayListBtn.addEventListener("click", () => {
   isPlayListRepeat = !isPlayListRepeat;
   if (isPlayListRepeat) {
-    repeatPlayListBtn.style.color = "white";
+    repeatPlayListBtn.style.color = "blue";
   } else {
     repeatPlayListBtn.style.color = "grey";
   }
 });
-function repeatPlayList(songNo, isBackward) {
+function repeatPlayList(songNo, isBackward=false) {
   if (isPlayListRepeat && isBackward && songNo == 0) {
     currentSong = playList.length;
   }
@@ -207,8 +213,9 @@ function repeatPlayList(songNo, isBackward) {
   }
 }
 
-setSongDetails(playList[0].song,playList[0].artist);
+setSongDetails(playList.songs[0].song, playList.songs[0].artist);
+playListName.innerHTML = playList.name;
 function setSongDetails(song, artist) {
-  SongName.textContent = song;
-  AsrtistName.textContent = artist;
-}
+  SongName.innerHTML = `<i class="fa-solid fa-music"></i> ${song}`;
+  AsrtistName.innerHTML = `<i class="fa-solid fa-circle-user"></i> ${artist}`;
+};

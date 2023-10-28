@@ -30,8 +30,11 @@
 }
 
 .playList{
+    background-color: beige;
     color: palevioletred;
-    margin: 10px 0;
+    padding: 10px 0;
+    border-bottom: 2px solid grey;
+    box-shadow: 1px 1px 5px 2px grey;
 }
 .playList h3{
     letter-spacing: 2px;
@@ -40,13 +43,14 @@
 #repeatPlayList{
     margin-left: 10px;
     color: grey;
+    cursor: pointer;
 }
 #repeatPlayList:hover,#repeatPlayList:active{
     color: white
 }
 .musicDetails{
     justify-content: space-between;
-    margin: 5px 0px;
+    margin: 10px 0px 5px 0px;
     color: white;
     letter-spacing: 1px;
 }
@@ -113,3 +117,16 @@
     border-color: white;
 }
 
+.disk{
+    color: purple;
+    animation: diskRotate 1s ease-in infinite;
+}
+
+@keyframes diskRotate {
+    from{
+        transform: rotate(0deg);
+    }
+    to{
+        transform: rotate(360deg);
+    }
+}

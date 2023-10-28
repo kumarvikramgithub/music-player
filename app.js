@@ -22,26 +22,26 @@ let isLiked = false;
 let isRepeatAudio = false;
 const playList = [
   {
-    audio: "audio/audio1.mp3",
-    thumbnail: "images/image1.jpg",
+    audio: "./audio/audio1.mp3",
+    thumbnail: "./images/image1.jpg",
     song: "Love is Life",
     artist: "Jone Rock",
   },
   {
-    audio: "audio/audio2.mp3",
-    thumbnail: "images/image2.jpg",
+    audio: "./audio/audio2.mp3",
+    thumbnail: "./images/image2.jpg",
     song: "O Bala O Bala",
     artist: "Sandeep Vidhi",
   },
   {
-    audio: "audio/audio3.mp3",
-    thumbnail: "images/image3.jpg",
+    audio: "./audio/audio3.mp3",
+    thumbnail: "./images/image3.jpg",
     song: "Teri Muskan",
     artist: "Arman",
   },
   {
-    audio: "audio/audio4.mp3",
-    thumbnail: "images/image4.jpg",
+    audio: "./audio/audio4.mp3",
+    thumbnail: "./images/image4.jpg",
     song: "Pare Pare tere Aakh",
     artist: "Pushpa Raj",
   },

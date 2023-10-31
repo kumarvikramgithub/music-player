@@ -19,41 +19,85 @@ const AsrtistName = document.querySelector("#artistName");
 const playListName = document.querySelector("#playListName");
 
 let isPlaying = false;
-let isLiked = false;
 let isRepeatAudio = false;
-const playList = {
+let playList = {
   name: `<i class="fa-solid fa-compact-disc disk"></i>Bollywood Hits 2023 `,
-songs: [
-  {
-    audio: "./audio/audio1.mp3",
-    thumbnail: "./images/image1.jpg",
-    song: "Love is Life",
-    artist: "Jone Rock",
-  },
-  {
-    audio: "./audio/audio2.mp3",
-    thumbnail: "./images/image2.jpg",
-    song: "O Bala O Bala",
-    artist: "Sandeep Vidhi",
-  },
-  {
-    audio: "./audio/audio3.mp3",
-    thumbnail: "./images/image3.jpg",
-    song: "Teri Muskan",
-    artist: "Arman",
-  },
-  {
-    audio: "./audio/audio4.mp3",
-    thumbnail: "./images/image4.jpg",
-    song: "Pare Pare tere Aakh",
-    artist: "Pushpa Raj",
-  },
-]
-}
+  songs: [
+    {
+      audio: "./audio/audio1.mp3",
+      thumbnail: "./images/image1.jpg",
+      song: "Love is Life",
+      artist: "Jone Rock",
+      isLiked: false,
+    },
+    {
+      audio: "./audio/audio2.mp3",
+      thumbnail: "./images/image2.jpg",
+      song: "O Bala O Bala",
+      artist: "Sandeep Vidhi",
+      isLiked: false,
+    },
+    {
+      audio: "./audio/audio3.mp3",
+      thumbnail: "./images/image3.jpg",
+      song: "Teri Muskan",
+      artist: "Arman",
+      isLiked: false,
+    },
+    {
+      audio: "./audio/audio1.mp3",
+      thumbnail: "./images/image1.jpg",
+      song: "Love is Life",
+      artist: "Jone Rock",
+      isLiked: false,
+    },
+    {
+      audio: "./audio/audio1.mp3",
+      thumbnail: "./images/image1.jpg",
+      song: "Love is Life",
+      artist: "Jone Rock",
+      isLiked: false,
+    },
+    {
+      audio: "./audio/audio2.mp3",
+      thumbnail: "./images/image2.jpg",
+      song: "O Bala O Bala",
+      artist: "Sandeep Vidhi",
+      isLiked: false,
+    },
+    {
+      audio: "./audio/audio3.mp3",
+      thumbnail: "./images/image3.jpg",
+      song: "Teri Muskan",
+      artist: "Arman",
+      isLiked: false,
+    },
+    {
+      audio: "./audio/audio2.mp3",
+      thumbnail: "./images/image2.jpg",
+      song: "O Bala O Bala",
+      artist: "Sandeep Vidhi",
+      isLiked: false,
+    },
+    {
+      audio: "./audio/audio3.mp3",
+      thumbnail: "./images/image3.jpg",
+      song: "Teri Muskan",
+      artist: "Arman",
+      isLiked: false,
+    },
+    {
+      audio: "./audio/audio4.mp3",
+      thumbnail: "./images/image4.jpg",
+      song: "Pare Pare tere Aakh",
+      artist: "Pushpa Raj",
+      isLiked: false,
+    },
+  ],
+  favouriteSong: [],
+};
 let currentSong = 0;
 let isPlayListRepeat = false;
-
-let favroiteAudio = [];
 
 playPauseBtn.addEventListener("click", () => {
   playPauseAudio();
@@ -62,33 +106,38 @@ function playPauseAudio() {
   if (isPlaying) {
     myAudio.pause();
     playPauseBtn.classList.replace("fa-pause", "fa-play");
-    playPauseBtn.style.backgroundColor = "purple";
-    playPauseBtn.style.borderColor = "grey";
-    playPauseBtn.style.color = "grey";
+    playPauseColors("purple", "grey");
   } else {
     myAudio.play();
-    playPauseBtn.style.backgroundColor = "red";
-    playPauseBtn.style.borderColor = "white";
-    playPauseBtn.style.color = "white";
+    playPauseColors("red", "white");
     playPauseBtn.classList.replace("fa-play", "fa-pause");
   }
   isPlaying = !isPlaying;
 }
 
+function playPauseColors(bgColor, color) {
+  playPauseBtn.style.backgroundColor = bgColor;
+  playPauseBtn.style.borderColor = color;
+  playPauseBtn.style.color = color;
+}
+
 likeBtn.addEventListener("click", () => {
-  if (!isLiked) {
-    likeBtn.classList.replace("fa-regular", "fa-solid");
-    likeBtn.style.color = "red";
-    favroiteAudio.push(myAudio);
-    localStorage.setItem("favroite", favroiteAudio);
-    // let fs = localStorage.getItem("favroite");
-  } else {
-    likeBtn.classList.replace("fa-solid", "fa-regular");
-    likeBtn.style.color = "grey";
-  }
-  likeBtn.classList.add("hover");
-  isLiked = !isLiked;
+  let isLike = !playList.songs[currentSong].isLiked;
+  isSongLiked(isLike);
 });
+
+function isSongLiked(isLike) {
+  playList.songs[currentSong].isLiked = isLike;
+  likeBtn.classList.replace(
+    isLike ? "fa-regular" : "fa-solid",
+    isLike ? "fa-solid" : "fa-regular"
+  );
+  if(isLike){
+    playList.favouriteSong.push(playList.songs[currentSong]);
+    console.log(playList.favouriteSong);
+  }
+  likeBtn.style.color = isLike ? "red" : "grey";
+}
 
 myAudio.addEventListener("timeupdate", (audio) => {
   let totalAudioTime = audio.target.duration;
@@ -102,14 +151,10 @@ repeatSongBtn.addEventListener("click", () => {
   isRepeatAudio = !isRepeatAudio;
 });
 
-function repeatSong(){
-  if (isRepeatAudio) {
-    myAudio.loop = false;
-    repeatSongBtn.style.color = "grey";
-  } else {
-    myAudio.loop = true;
-    repeatSongBtn.style.color = "white";
-  }
+function repeatSong() {
+  // isRepeatAudio ==true stop the loop else start the loop
+  myAudio.loop = !isRepeatAudio;
+  repeatSongBtn.style.color = isRepeatAudio ? "grey" : "white";
 }
 
 trackBar.addEventListener("click", (track) => {
@@ -136,7 +181,7 @@ function calulateTimes(totalAudioTime, currentAudioTime) {
   let playTime = currentAudioTime;
   if (totalAudioTime === currentAudioTime) {
     currentSong++;
-    currentSong = currentSong%playList.songs.length;
+    currentSong = currentSong % playList.songs.length;
     songChange();
   }
 
@@ -167,7 +212,6 @@ backwardBtn.addEventListener("click", () => {
   disabledBackwardForward(backwardBtn, currentSong, true);
   if (currentSong > 0) {
     currentSong--;
-    console.log('Hi')
     songChange();
   }
 });
@@ -179,8 +223,9 @@ forwardBtn.addEventListener("click", () => {
     songChange();
   }
 });
-function songChange(){
-  if(isRepeatAudio){
+
+function songChange(isPlay = false) {
+  if (isRepeatAudio) {
     repeatSong();
   }
   myAudio.setAttribute("src", playList.songs[currentSong].audio);
@@ -189,16 +234,11 @@ function songChange(){
   let totalAudioTime = myAudio.duration;
   let currentAudioTime = myAudio.currentTime;
   calulateTimes(totalAudioTime, currentAudioTime);
-  isPlaying = false;
+  isPlaying = isPlay;
+  isSongLiked(playList.songs[currentSong].isLiked);
   playPauseAudio();
 }
 function disabledBackwardForward(btn, songNo, isBackward) {
-  // if (song === songNo) {
-  //   console.log(songNo, btn);
-  //   btn.style.pointerEvents = "none";
-  // }else{
-  //   btn.style.pointerEvents = "auto";
-  // }
   if (songNo === 0 || songNo === playList.songs.length - 1) {
     repeatPlayList(songNo, isBackward);
   }
@@ -212,7 +252,7 @@ repeatPlayListBtn.addEventListener("click", () => {
     repeatPlayListBtn.style.color = "grey";
   }
 });
-function repeatPlayList(songNo, isBackward=false) {
+function repeatPlayList(songNo, isBackward = false) {
   if (isPlayListRepeat && isBackward && songNo == 0) {
     currentSong = playList.songs.length;
   }
@@ -220,18 +260,30 @@ function repeatPlayList(songNo, isBackward=false) {
     currentSong = -1;
   }
 }
-
 setSongDetails(playList.songs[0].song, playList.songs[0].artist);
 playListName.innerHTML = playList.name;
 function setSongDetails(song, artist) {
-  SongName.setAttribute('title',song);
+  SongName.setAttribute("title", song);
   AsrtistName.setAttribute("title", artist);
-  if(song.length>12){
-    song = song.substring(0,12)+'...';
+  if(song.length > 12) {
+    song = song.substring(0, 12) + "...";
   }
   if (artist.length > 12) {
     artist = artist.substring(0, 8) + "...";
   }
   SongName.innerHTML = `<i class="fa-solid fa-music"></i> ${song}`;
   AsrtistName.innerHTML = `<i class="fa-solid fa-circle-user"></i> ${artist}`;
-};
+  myAudio.setAttribute('src',playList.songs[currentSong].audio);
+}
+
+// function resetMusicPlayer(newPlaylist, startingSongIndex) {
+//   playList = playList;
+//   playListName.innerHTML = playList.name;
+//   currentSong = startingSongIndex;
+//   setSongDetails(
+//     playList.songs[currentSong].song,
+//     playList.songs[currentSong].artist
+//   );
+//   songChange(true);
+// }
+// resetMusicPlayer(playList, 2);

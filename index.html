@@ -1,51 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Music Player</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="shortcut icon" href="./images/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-</head>
-<body>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="shortcut icon" href="./images/favicon.ico" type="image/x-icon" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+      integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
     <div class="container flex">
-        <div class="thumbnail">
-            <img src="images/image1.jpg" alt="" id="songThumbnail">
+      <div class="thumbnail">
+        <img src="images/image1.jpg" alt="" id="songThumbnail" />
 
-            <div class="musicContainer">
-                <div class="playList flex">
-                    <h3 id="playListName"></h3>
-                    <i class="fa-solid fa-repeat hover" id="repeatPlayList" title="Repeat playList"></i>
-                    <i class="fa-solid fa-ellipsis-vertical" id="3dotaction"></i>
-                </div>
-                <div class="musicDetails flex">
-                    <h3 id="songName">My Music</h3>
-                    <p id="artistName">Artist</p>
-                </div>
-            </div>
-            <div class="controlContainer">
-                <div class="track flex">
-                    <div class="progressBar"></div>
-                    <div class="circle"></div>
-                </div>
-                <div class="timeSpan flex">
-                    <div id="currentTime">0:00</div>
-                    <div id="totalDuration">0:00</div>
-                </div>
-                <div class="controls flex">
-                    <audio id="myAudio"></audio>
+        <div class="musicContainer">
+          <div class="playList flex">
+            <h3 id="playListName"></h3>
+            <i
+              class="fa-solid fa-repeat hover"
+              id="repeatPlayList"
+              title="Repeat playList"
+            ></i>
+            <div id="action" class="flex">
+              <div id="openPop" class="flex" title="Open new Playlist">
+                  <i class="fa-solid fa-ellipsis-vertical dot3"></i>
+              </div>
+              <div id="actionContainer">
+                <div class="arrow-up"></div>
+                <div class="allAction">
                     
-                    <i class="fa-solid fa-rotate-right hover" id="repeatSong" title="Repeat song"></i>
-                    <i class="fa-solid fa-backward hover" id="backward" title="Previous Song"></i>
-                    <i class="fa-solid fa-play hover" id="playPause" title="Play/Pause"></i>
-                    <i class="fa-solid fa-forward hover" id="forward" title="Next song"></i>
-                    <i class="fa-regular fa-heart hover" id="addLike" title="Fabroite song"></i>
-                    <!-- <i class="fa-solid fa-rotate-right"></i> -->
                 </div>
+              </div>
             </div>
+          </div>
+          <div class="musicDetails flex">
+            <h3 id="songName">My Music</h3>
+            <p id="artistName">Artist</p>
+          </div>
         </div>
+        <div class="controlContainer">
+          <div class="track flex">
+            <div class="progressBar"></div>
+            <div class="circle"></div>
+          </div>
+          <div class="timeSpan flex">
+            <div id="currentTime">0:00</div>
+            <div id="totalDuration">0:00</div>
+          </div>
+          <div class="controls flex">
+            <audio id="myAudio"></audio>
+
+            <i
+              class="fa-solid fa-rotate-right hover"
+              id="repeatSong"
+              title="Repeat song"
+            ></i>
+            <i
+              class="fa-solid fa-backward hover"
+              id="backward"
+              title="Previous Song"
+            ></i>
+            <i
+              class="fa-solid fa-play hover"
+              id="playPause"
+              title="Play/Pause"
+            ></i>
+            <i
+              class="fa-solid fa-forward hover"
+              id="forward"
+              title="Next song"
+            ></i>
+            <i
+              class="fa-regular fa-heart hover"
+              id="addLike"
+              title="Fabroite song"
+            ></i>
+            <!-- <i class="fa-solid fa-rotate-right"></i> -->
+          </div>
+        </div>
+      </div>
     </div>
     <script src="app.js"></script>
-</body>
+  </body>
 </html>

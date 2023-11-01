@@ -14,14 +14,23 @@ const totalDuration = document.querySelector("#totalDuration");
 const songThumbnail = document.querySelector("#songThumbnail");
 
 const repeatPlayListBtn = document.querySelector("#repeatPlayList");
+const actionBtn = document.querySelector("#openPop");
+const actionAll = document.querySelector(".allAction");
 const SongName = document.querySelector("#songName");
 const AsrtistName = document.querySelector("#artistName");
 const playListName = document.querySelector("#playListName");
+const playlistPop = document.querySelector("#actionContainer");
 
 let isPlaying = false;
 let isRepeatAudio = false;
-let playList = {
-  name: `<i class="fa-solid fa-compact-disc disk"></i>Bollywood Hits 2023 `,
+
+let favouriteSongs = {
+  name: "Your Favourite Songs",
+  songs: [],
+};
+let allPlaylists = [
+  {
+  name: `Bollywood Hits 2023 `,
   songs: [
     {
       audio: "./audio/audio1.mp3",
@@ -45,31 +54,22 @@ let playList = {
       isLiked: false,
     },
     {
-      audio: "./audio/audio1.mp3",
-      thumbnail: "./images/image1.jpg",
-      song: "Love is Life",
-      artist: "Jone Rock",
+      audio: "./audio/audio4.mp3",
+      thumbnail: "./images/image4.jpg",
+      song: "Pare Pare tere Aakh",
+      artist: "Pushpa Raj",
       isLiked: false,
     },
+  ]
+},
+{
+  name: `Bollywood old song `,
+  songs: [
     {
       audio: "./audio/audio1.mp3",
       thumbnail: "./images/image1.jpg",
       song: "Love is Life",
       artist: "Jone Rock",
-      isLiked: false,
-    },
-    {
-      audio: "./audio/audio2.mp3",
-      thumbnail: "./images/image2.jpg",
-      song: "O Bala O Bala",
-      artist: "Sandeep Vidhi",
-      isLiked: false,
-    },
-    {
-      audio: "./audio/audio3.mp3",
-      thumbnail: "./images/image3.jpg",
-      song: "Teri Muskan",
-      artist: "Arman",
       isLiked: false,
     },
     {
@@ -93,12 +93,97 @@ let playList = {
       artist: "Pushpa Raj",
       isLiked: false,
     },
-  ],
-  favouriteSong: [],
-};
+  ]
+}
+]
+let playList = allPlaylists[0];
 let currentSong = 0;
 let isPlayListRepeat = false;
+let isPlayListsPopOpen= false;
+var accordions = document.getElementsByClassName("accordion");
+var panelClass = document.querySelector(".panel");
 
+
+
+
+actionBtn.addEventListener("click",()=>{
+  playListsPopOpen();
+});
+
+function playListsPopOpen(){
+  if (!isPlayListsPopOpen) {
+    playlistPop.style.display = "block";
+  } else {
+    playlistPop.style.display = "none";
+  }
+  isPlayListsPopOpen = !isPlayListsPopOpen;
+}
+accordionsText();
+function accordionsText(){
+      renderSongInPlaylist(favouriteSongs.songs, favouriteSongs.name, -1);
+    for(let i=0; i<allPlaylists.length; i++){
+      console.log(i)
+      renderSongInPlaylist(allPlaylists[i].songs, allPlaylists[i].name, i);
+    }
+    renderPlaylist();
+}
+ function renderSongInPlaylist(songs, playlistName, indexOfCurrentPlaylist){
+  let AccordionBtn = `<button class="accordion"><i class="fa-solid fa-notes-medical" title="Playlist"></i> `;
+  let panelUlOpen =
+    indexOfCurrentPlaylist === -1
+      ? `</button><div class="panel"><ul id="myFavouriteSongs">`
+      : `</button><div class="panel"><ul>`;
+  let panelUlClose = `</ul></div>`;
+  let innerHTMLContent = "";
+  let divEle = document.createElement("div");
+  for (let j = 0; j < songs.length; j++) {
+    console.log(indexOfCurrentPlaylist, j);
+    innerHTMLContent += `<li class="playlistSong" onclick="playSong(${indexOfCurrentPlaylist},${j})"><i class="fa-solid fa-music"></i> ${songs[j].song}</li>`;
+  }
+  divEle.innerHTML = `${AccordionBtn} ${playlistName} ${panelUlOpen} ${innerHTMLContent} ${panelUlClose}`;
+  actionAll.appendChild(divEle);
+  innerHTMLContent = "";
+ }
+playSong(0,0);
+function playSong(playListIndex, songIndex){
+  if(playListIndex===-1){
+    playList = favouriteSongs;
+  }else{
+    playList = allPlaylists[playListIndex];
+  }
+  currentSong = songIndex;
+  setSongDetails(
+    playList.songs[songIndex].song,
+    playList.songs[songIndex].artist
+  ); 
+  playListName.innerHTML = `<i class="fa-solid fa-compact-disc disk"></i> ${
+    playList.name.length > 15
+      ? playList.name.substring(0, 15) + "..."
+      : playList.name
+  }`;
+  playListName.setAttribute("title", playList.name);
+  playlistPop.style.display = "none";
+  isPlayListsPopOpen = false;
+  songChange();
+}
+
+function renderPlaylist() {
+  var i;
+  for (i = 0; i < accordions.length; i++) {
+    accordions[i].addEventListener("click", function () {
+      /* Toggle between adding and removing the "active" class,
+      to highlight the button that controls the panel */
+      this.classList.toggle("active");
+      /* Toggle between hiding and showing the active panel */
+      var panel = this.nextElementSibling;
+      if (panel.style.display === "block") {
+        panel.style.display = "none";
+      } else {
+        panel.style.display = "block";
+      }
+    });
+  }
+}
 playPauseBtn.addEventListener("click", () => {
   playPauseAudio();
 });
@@ -133,10 +218,26 @@ function isSongLiked(isLike) {
     isLike ? "fa-solid" : "fa-regular"
   );
   if(isLike){
-    playList.favouriteSong.push(playList.songs[currentSong]);
-    console.log(playList.favouriteSong);
+    favouriteSongs.songs.push(playList.songs[currentSong]);
+    console.log(favouriteSongs);
+    addSongInFavouritePlaylist(favouriteSongs.songs.length-1);
   }
   likeBtn.style.color = isLike ? "red" : "grey";
+}
+
+function addSongInFavouritePlaylist(newSongIndex){
+  const myplaylist = document.querySelector("#myFavouriteSongs");
+  let indexOfCurrentPlaylist = -1;
+  let myLi = document.createElement("li");
+  myLi.classList.add("playlistSong");
+  myLi.setAttribute(
+    "onclick",
+    `playSong(${indexOfCurrentPlaylist},${newSongIndex})`
+  );
+  console.log(indexOfCurrentPlaylist, newSongIndex);
+  let innerHTMLContent = `<i class="fa-solid fa-music"></i> ${favouriteSongs.songs[newSongIndex].song}`;
+  myLi.innerHTML = innerHTMLContent;
+  myplaylist.appendChild(myLi);
 }
 
 myAudio.addEventListener("timeupdate", (audio) => {
@@ -260,8 +361,7 @@ function repeatPlayList(songNo, isBackward = false) {
     currentSong = -1;
   }
 }
-setSongDetails(playList.songs[0].song, playList.songs[0].artist);
-playListName.innerHTML = playList.name;
+
 function setSongDetails(song, artist) {
   SongName.setAttribute("title", song);
   AsrtistName.setAttribute("title", artist);

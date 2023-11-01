@@ -122,7 +122,6 @@ accordionsText();
 function accordionsText(){
       renderSongInPlaylist(favouriteSongs.songs, favouriteSongs.name, -1);
     for(let i=0; i<allPlaylists.length; i++){
-      console.log(i)
       renderSongInPlaylist(allPlaylists[i].songs, allPlaylists[i].name, i);
     }
     renderPlaylist();
@@ -137,13 +136,14 @@ function accordionsText(){
   let innerHTMLContent = "";
   let divEle = document.createElement("div");
   for (let j = 0; j < songs.length; j++) {
-    console.log(indexOfCurrentPlaylist, j);
     innerHTMLContent += `<li class="playlistSong" onclick="playSong(${indexOfCurrentPlaylist},${j})"><i class="fa-solid fa-music"></i> ${songs[j].song}</li>`;
   }
   divEle.innerHTML = `${AccordionBtn} ${playlistName} ${panelUlOpen} ${innerHTMLContent} ${panelUlClose}`;
   actionAll.appendChild(divEle);
   innerHTMLContent = "";
  }
+
+
 playSong(0,0);
 function playSong(playListIndex, songIndex){
   if(playListIndex===-1){
@@ -153,8 +153,8 @@ function playSong(playListIndex, songIndex){
   }
   currentSong = songIndex;
   setSongDetails(
-    playList.songs[songIndex].song,
-    playList.songs[songIndex].artist
+    playList.songs[currentSong].song,
+    playList.songs[currentSong].artist
   ); 
   playListName.innerHTML = `<i class="fa-solid fa-compact-disc disk"></i> ${
     playList.name.length > 15
@@ -164,7 +164,7 @@ function playSong(playListIndex, songIndex){
   playListName.setAttribute("title", playList.name);
   playlistPop.style.display = "none";
   isPlayListsPopOpen = false;
-  songChange();
+  songChange(true);
 }
 
 function renderPlaylist() {
@@ -219,7 +219,6 @@ function isSongLiked(isLike) {
   );
   if(isLike){
     favouriteSongs.songs.push(playList.songs[currentSong]);
-    console.log(favouriteSongs);
     addSongInFavouritePlaylist(favouriteSongs.songs.length-1);
   }
   likeBtn.style.color = isLike ? "red" : "grey";
@@ -234,7 +233,6 @@ function addSongInFavouritePlaylist(newSongIndex){
     "onclick",
     `playSong(${indexOfCurrentPlaylist},${newSongIndex})`
   );
-  console.log(indexOfCurrentPlaylist, newSongIndex);
   let innerHTMLContent = `<i class="fa-solid fa-music"></i> ${favouriteSongs.songs[newSongIndex].song}`;
   myLi.innerHTML = innerHTMLContent;
   myplaylist.appendChild(myLi);
@@ -376,14 +374,3 @@ function setSongDetails(song, artist) {
   myAudio.setAttribute('src',playList.songs[currentSong].audio);
 }
 
-// function resetMusicPlayer(newPlaylist, startingSongIndex) {
-//   playList = playList;
-//   playListName.innerHTML = playList.name;
-//   currentSong = startingSongIndex;
-//   setSongDetails(
-//     playList.songs[currentSong].song,
-//     playList.songs[currentSong].artist
-//   );
-//   songChange(true);
-// }
-// resetMusicPlayer(playList, 2);
